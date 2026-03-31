@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LP制作 専用ヒアリングシート</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=BIZ+UDPMincho:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'BIZ UDPGothic', sans-serif; 
+            background-color: #F9F8F6; 
+            color: #333333; 
+            line-height: 1.9; 
+            font-size: 110%;
+        }
+        h1, h2, h3, .font-serif { font-family: 'BIZ UDPMincho', serif; color: #3E2A23; }
+        
+        .step-container { display: none; opacity: 0; transition: opacity 0.5s ease-in-out; }
+        .step-container.active { display: block; opacity: 1; }
+        
+        .input-elegant {
+            background-color: #ffffff;
+            border: 1px solid #E5E0D8;
+            border-radius: 8px;
+            padding: 1.2rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-family: 'BIZ UDPGothic', sans-serif;
+            color: #333333;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .input-elegant:focus {
+            outline: none;
+            border-color: #3E2A23;
+            box-shadow: 0 0 0 3px rgba(62, 42, 35, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: #3E2A23; color: #ffffff; border: 1px solid #3E2A23;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover { background-color: #F9F8F6; color: #3E2A23; }
+        
+        .btn-secondary {
+            background-color: #F9F8F6; color: #3E2A23; border: 1px solid #E5E0D8;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover { background-color: #E5E0D8; }
+
+        .progress-bar-bg { background-color: #E5E0D8; border-radius: 999px; height: 8px; overflow: hidden; }
+        .progress-bar-fill { background-color: #C49A9A; height: 100%; transition: width 0.4s ease; }
+
+        /* 選択カードのデザイン */
+        .radio-card {
+            border: 2px solid #E5E0D8; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; background: #fff;
+        }
+        .radio-input:checked + .radio-card {
+            border-color: #3E2A23; background-color: #F7F5F0;
+        }
+        .radio-input { display: none; }
+    </style>
+</head>
+<body class="antialiased py-10 px-4 md:py-20">
+
+    <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg border border-[#E5E0D8] overflow-hidden">
+        
+        <!-- ヘッダー＆進捗バー -->
+        <div class="bg-[#F7F5F0] p-8 border-b border-[#E5E0D8] text-center">
+            <h1 class="text-2xl md:text-3xl font-bold mb-4 tracking-widest">あなた専用LP 構築シート</h1>
+            <p class="text-sm text-gray-600 mb-6">※入力内容は自動で保存されます。途中で画面を閉じても続きから再開できます。</p>
+            
+            <div class="flex justify-between text-xs font-bold text-[#C49A9A] mb-2 tracking-widest">
+                <span id="step-indicator">STEP 1 / 5</span>
+                <span id="progress-text">20%</span>
+            </div>
+            <div class="progress-bar-bg w-full">
+                <div id="progress-bar" class="progress-bar-fill w-1/5"></div>
+            </div>
+        </div>
+
+        <form id="lpOrderForm" class="p-6 md:p-12">
+            
+            <!-- ================= STEP 1 ================= -->
+            <div class="step-container active" id="step-1">
+                <h2 class="text-xl md:text-2xl font-bold mb-8 border-b border-[#E5E0D8] pb-4">1. サービスとターゲット</h2>
+                <div class="space-y-8">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-3">サービスの名前（タイトル）</label>
+                        <input type="text" name="service_title" class="input-elegant" placeholder="例：AI×Instagram 徹底サポート講座">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-3">どんな人に受けてほしいですか？（ターゲット）</label>
+                        <input type="text" name="target" class="input-elegant" placeholder="例：50代・60代の知的な女性、スマホ操作が少し苦手な方">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-3">お客様はどんな「お悩み」を抱えていますか？</label>
+                        <p class="text-xs text-gray-500 mb-3">※思いつく限り箇条書きでご記入ください</p>
+                        <textarea name="worries" class="input-elegant h-32" placeholder="・一人では不安を感じている&#10;・自己流で結果が出なかった&#10;・複雑な操作は苦手"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-3">このサービスを受けると「どうなれますか？」</label>
+                        <textarea name="benefits" class="input-elegant h-24" placeholder="例：毎日の発信が楽しくなり、ご自宅にいながら安定した収益基盤が作れます。"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= STEP 2 ================= -->
+            <div class="step-container" id="step-2">
+                <h2 class="text-xl md:text-2xl font-bold mb-8 border-b border-[#E5E0D8] pb-4">2. 講座・商品の詳細と料金</h2>
+                <div class="space-y-8">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-3">学べる内容・カリキュラム</label>
+                        <textarea name="curriculum" class="input-elegant h-32" placeholder="・アフィリエイトの仕組みと稼ぎ方&#10;・AIを使った売れる商品づくりのステップ"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-3">開催日程・スケジュール</label>
+                        <textarea name="schedule" class="input-elegant h-24" placeholder="例：4月17日〜6月21日まで 全12回（21:00スタート、アーカイブあり）"></textarea>
+                    </div>
+                    <div class="bg-[#F7F5F0] p-6 rounded-xl border border-[#E5E0D8]">
+                        <h3 class="text-lg font-bold mb-4">一番売りたい「本命のプラン」</h3>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">プラン名</label>
+                        <input type="text" name="main_plan_name" class="input-elegant mb-4" placeholder="例：プランB 本講座（すべて込み）">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">価格（税込・税別など）</label>
+                        <input type="text" name="main_plan_price" class="input-elegant" placeholder="例：特別価格 80,000円">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-3">その他のプラン（Aプラン、Cプラン等）があれば</label>
+                        <textarea name="other_plans" class="input-elegant h-24" placeholder="例：Aプラン（単品）39,800円、Cプラン（LP制作代行オプション）60,000円"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= STEP 3 ================= -->
+            <div class="step-container" id="step-3">
+                <h2 class="text-xl md:text-2xl font-bold mb-8 border-b border-[#E5E0D8] pb-4">3. 特典とプロフィール</h2>
+                <div class="space-y-8">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-3">成約率を高める「特別なプレゼント（特典）」</label>
+                        <p class="text-xs text-gray-500 mb-3">※特典の数と、それぞれの簡単な内容をご記入ください</p>
+                        <textarea name="bonuses" class="input-elegant h-40" placeholder="特典①：CANVA 2ヶ月間 質問・指導受け放題&#10;特典②：売れる商品を一緒に作る個別カウンセリング&#10;特典③：LP制作 80%OFF優待"></textarea>
+                    </div>
+                    <div class="bg-[#F7F5F0] p-6 rounded-xl border border-[#E5E0D8]">
+                        <h3 class="text-lg font-bold mb-4">メイン講師のプロフィール</h3>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">お名前・肩書き</label>
+                        <input type="text" name="instructor_name" class="input-elegant mb-4" placeholder="例：マネーアドバイザー 美香">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">簡単な経歴・メッセージ</label>
+                        <textarea name="instructor_bio" class="input-elegant h-24" placeholder="例：スマホひとつで収益化が叶う未来をご提案しています。"></textarea>
+                        <p class="text-xs text-[#C49A9A] font-bold mt-3">※他に複数名の講師がいる場合は、後ほどLINE等で詳細をお伺いします。</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-3">「お客様の声（実績写真）」は用意できますか？</label>
+                        <div class="flex space-x-6">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="has_voices" value="yes" class="w-4 h-4 text-[#3E2A23]">
+                                <span class="ml-2 text-sm text-gray-700">はい（写真や文章がある）</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="has_voices" value="no" class="w-4 h-4 text-[#3E2A23]">
+                                <span class="ml-2 text-sm text-gray-700">いいえ（まだ無い）</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= STEP 4 ================= -->
+            <div class="step-container" id="step-4">
+                <h2 class="text-xl md:text-2xl font-bold mb-8 border-b border-[#E5E0D8] pb-4">4. デザインの方向性</h2>
+                <div class="space-y-8">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-4">ご希望のデザインテイスト（複数選択可）</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <label class="relative block">
+                                <input type="checkbox" name="design_taste" value="minimal_elegance" class="radio-input">
+                                <div class="radio-card p-4 text-center h-full">
+                                    <p class="font-serif font-bold text-lg mb-1">ミニマル・エレガンス</p>
+                                    <p class="text-xs text-gray-500">50〜60代向け。余白を贅沢に使い、装飾を抑えた上品なスタイル</p>
+                                </div>
+                            </label>
+                            <label class="relative block">
+                                <input type="checkbox" name="design_taste" value="pastel_cute" class="radio-input">
+                                <div class="radio-card p-4 text-center h-full">
+                                    <p class="font-serif font-bold text-lg mb-1">パステル・ふんわり</p>
+                                    <p class="text-xs text-gray-500">20〜30代向け。ピンクや白を使った可愛らしく優しいスタイル</p>
+                                </div>
+                            </label>
+                            <label class="relative block">
+                                <input type="checkbox" name="design_taste" value="corporate_trust" class="radio-input">
+                                <div class="radio-card p-4 text-center h-full">
+                                    <p class="font-serif font-bold text-lg mb-1">コーポレート・誠実</p>
+                                    <p class="text-xs text-gray-500">ビジネス層向け。青や白を基調としたかっちり信頼感のあるスタイル</p>
+                                </div>
+                            </label>
+                            <label class="relative block">
+                                <input type="checkbox" name="design_taste" value="luxury_rich" class="radio-input">
+                                <div class="radio-card p-4 text-center h-full">
+                                    <p class="font-serif font-bold text-lg mb-1">ラグジュアリー・リッチ</p>
+                                    <p class="text-xs text-gray-500">高単価層向け。黒やゴールドを使った重厚で高級感のあるスタイル</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-3">メインに使いたい色（イメージカラー）</label>
+                        <input type="text" name="main_color" class="input-elegant" placeholder="例：シャンパンベージュ、ダスティピンクなど">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-3">デザインで「絶対に使ってほしくない表現（NG）」</label>
+                        <p class="text-xs text-gray-500 mb-3">※ここが一番重要です！</p>
+                        <textarea name="ng_design" class="input-elegant h-24" placeholder="例：チープに見える絵文字（🚀💦など）は使わないでほしい。煽るような赤い太文字は避けてほしい。"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= STEP 5 ================= -->
+            <div class="step-container" id="step-5">
+                <h2 class="text-xl md:text-2xl font-bold mb-8 border-b border-[#E5E0D8] pb-4">5. 確認と送信</h2>
+                <div class="space-y-8">
+                    <div class="bg-[#F7F5F0] p-6 rounded-xl border border-[#E5E0D8]">
+                        <h3 class="text-lg font-bold mb-4">お申し込みフォームで取得したい情報</h3>
+                        <p class="text-xs text-gray-500 mb-4">※お客様が購入する際に入力させる項目です</p>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <label class="flex items-center"><input type="checkbox" name="form_fields" value="お名前" checked disabled class="mr-2">お名前（必須）</label>
+                            <label class="flex items-center"><input type="checkbox" name="form_fields" value="メールアドレス" checked disabled class="mr-2">メールアドレス（必須）</label>
+                            <label class="flex items-center"><input type="checkbox" name="form_fields" value="電話番号" class="mr-2">電話番号</label>
+                            <label class="flex items-center"><input type="checkbox" name="form_fields" value="ご住所" class="mr-2">ご住所</label>
+                            <label class="flex items-center"><input type="checkbox" name="form_fields" value="性別" class="mr-2">性別</label>
+                            <label class="flex items-center"><input type="checkbox" name="form_fields" value="InstagramID" class="mr-2">Instagram ID</label>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-3">特商法・プライバシーポリシーについて</label>
+                        <div class="space-y-3">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="legal_pages" value="image" class="w-4 h-4 text-[#3E2A23]">
+                                <span class="ml-2 text-sm text-gray-700">内容の「画像」を用意してある</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="legal_pages" value="text" class="w-4 h-4 text-[#3E2A23]">
+                                <span class="ml-2 text-sm text-gray-700">テキスト（文章）で用意してある</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="legal_pages" value="need_help" class="w-4 h-4 text-[#3E2A23]">
+                                <span class="ml-2 text-sm text-gray-700">書き方がわからないのでテンプレートが欲しい</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border-2 border-[#E5E0D8] p-6 rounded-xl text-center mt-12">
+                        <p class="font-bold text-gray-800 mb-4">お疲れ様でした！以上でヒアリングは完了です。</p>
+                        <p class="text-sm text-gray-600 mb-6">※「写真素材（講師・実績など）」につきましては、後ほどLINE等で直接お送りください。<br>※送信ボタンを押すと、担当者に内容が共有されます。</p>
+                        <button type="submit" id="submitBtn" class="btn-primary w-full md:w-auto px-16 py-5 rounded-full text-lg font-bold tracking-widest">
+                            内容を送信して依頼する
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ナビゲーションボタン -->
+            <div class="flex justify-between mt-12 pt-6 border-t border-[#E5E0D8]">
+                <button type="button" id="prevBtn" class="btn-secondary px-8 py-3 rounded-full text-sm font-bold hidden">
+                    ← 前へ戻る
+                </button>
+                <button type="button" id="nextBtn" class="btn-primary px-12 py-3 rounded-full text-sm font-bold ml-auto">
+                    次へ進む →
+                </button>
+            </div>
+            
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentStep = 1;
+            const totalSteps = 5;
+            
+            const steps = document.querySelectorAll('.step-container');
+            const nextBtn = document.getElementById('nextBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            const stepIndicator = document.getElementById('step-indicator');
+            const progressText = document.getElementById('progress-text');
+            const progressBar = document.getElementById('progress-bar');
+            
+            // 画面表示の更新
+            function updateUI() {
+                steps.forEach((step, index) => {
+                    if (index + 1 === currentStep) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+                
+                // ボタンの表示・非表示
+                if (currentStep === 1) {
+                    prevBtn.classList.add('hidden');
+                } else {
+                    prevBtn.classList.remove('hidden');
+                }
+                
+                if (currentStep === totalSteps) {
+                    nextBtn.classList.add('hidden');
+                } else {
+                    nextBtn.classList.remove('hidden');
+                }
+                
+                // プログレスバーの更新
+                const percent = (currentStep / totalSteps) * 100;
+                stepIndicator.innerText = \`STEP \${currentStep} / \${totalSteps}\`;
+                progressText.innerText = \`\${percent}%\`;
+                progressBar.style.width = \`\${percent}%\`;
+                
+                // 上部にスクロール
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            nextBtn.addEventListener('click', () => {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateUI();
+                }
+            });
+            
+            prevBtn.addEventListener('click', () => {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateUI();
+                }
+            });
+
+            // ===== 自動保存機能 (localStorage) =====
+            const form = document.getElementById('lpOrderForm');
+            const inputs = form.querySelectorAll('input[name], textarea[name]');
+
+            function saveToLocal() {
+                const saveData = {};
+                inputs.forEach(input => {
+                    if (input.type === 'checkbox' || input.type === 'radio') {
+                        saveData[input.name + '_' + input.value] = input.checked;
+                    } else {
+                        saveData[input.name] = input.value;
+                    }
+                });
+                localStorage.setItem('mika_lp_draft', JSON.stringify(saveData));
+            }
+
+            function loadFromLocal() {
+                const saved = localStorage.getItem('mika_lp_draft');
+                if (saved) {
+                    try {
+                        const saveData = JSON.parse(saved);
+                        inputs.forEach(input => {
+                            if (input.type === 'checkbox' || input.type === 'radio') {
+                                if (saveData[input.name + '_' + input.value] !== undefined) {
+                                    input.checked = saveData[input.name + '_' + input.value];
+                                }
+                            } else {
+                                if (saveData[input.name] !== undefined) {
+                                    input.value = saveData[input.name];
+                                }
+                            }
+                        });
+                    } catch(e) {
+                        console.error('Failed to load draft data');
+                    }
+                }
+            }
+
+            // 入力するたびに保存
+            form.addEventListener('input', saveToLocal);
+            form.addEventListener('change', saveToLocal);
+            
+            // ページ読み込み時に復元
+            loadFromLocal();
+
+            // 送信処理（モック）
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('【送信成功】\\nご入力ありがとうございます！\\n担当者が内容を確認し、制作に取り掛かります。\\n\\n※送信後は自動保存のデータがクリアされます。');
+                localStorage.removeItem('mika_lp_draft');
+                form.reset();
+                currentStep = 1;
+                updateUI();
+            });
+        });
+    </script>
+</body>
+</html>
