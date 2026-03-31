@@ -271,6 +271,7 @@
         </form>
     </div>
 
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             let currentStep = 1;
@@ -282,6 +283,7 @@
             const stepIndicator = document.getElementById('step-indicator');
             const progressText = document.getElementById('progress-text');
             const progressBar = document.getElementById('progress-bar');
+            const submitBtn = document.getElementById('submitBtn');
             
             // 画面表示の更新
             function updateUI() {
@@ -308,27 +310,33 @@
                 
                 // プログレスバーの更新
                 const percent = (currentStep / totalSteps) * 100;
-                stepIndicator.innerText = \`STEP \${currentStep} / \${totalSteps}\`;
-                progressText.innerText = \`\${percent}%\`;
-                progressBar.style.width = \`\${percent}%\`;
+                stepIndicator.innerText = 'STEP ' + currentStep + ' / ' + totalSteps;
+                progressText.innerText = Math.round(percent) + '%';
+                progressBar.style.width = percent + '%';
                 
                 // 上部にスクロール
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
             
-            nextBtn.addEventListener('click', () => {
-                if (currentStep < totalSteps) {
-                    currentStep++;
-                    updateUI();
-                }
-            });
+            if(nextBtn) {
+                nextBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (currentStep < totalSteps) {
+                        currentStep++;
+                        updateUI();
+                    }
+                });
+            }
             
-            prevBtn.addEventListener('click', () => {
-                if (currentStep > 1) {
-                    currentStep--;
-                    updateUI();
-                }
-            });
+            if(prevBtn) {
+                prevBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (currentStep > 1) {
+                        currentStep--;
+                        updateUI();
+                    }
+                });
+            }
 
             // ===== 自動保存機能 (localStorage) =====
             const form = document.getElementById('lpOrderForm');
@@ -363,7 +371,7 @@
                             }
                         });
                     } catch(e) {
-                        console.error('Failed to load draft data');
+                        console.error('Failed to load draft data', e);
                     }
                 }
             }
@@ -375,10 +383,17 @@
             // ページ読み込み時に復元
             loadFromLocal();
 
+            // 初回表示の適用
+            updateUI();
+
             // 送信処理（モック）
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                alert('【送信成功】\\nご入力ありがとうございます！\\n担当者が内容を確認し、制作に取り掛かります。\\n\\n※送信後は自動保存のデータがクリアされます。');
+                alert('【送信成功】
+ご入力ありがとうございます！
+担当者が内容を確認し、制作に取り掛かります。
+
+※送信後は自動保存のデータがクリアされます。');
                 localStorage.removeItem('mika_lp_draft');
                 form.reset();
                 currentStep = 1;
@@ -386,5 +401,6 @@
             });
         });
     </script>
+
 </body>
 </html>
