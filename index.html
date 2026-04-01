@@ -389,11 +389,7 @@
             // 送信処理（モック）
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                alert('【送信成功】
-ご入力ありがとうございます！
-担当者が内容を確認し、制作に取り掛かります。
-
-※送信後は自動保存のデータがクリアされます。');
+                alert('【送信成功】\nご入力ありがとうございます！\n担当者が内容を確認し、制作に取り掛かります。\n\n※送信後は自動保存のデータがクリアされます。');
                 localStorage.removeItem('mika_lp_draft');
                 form.reset();
                 currentStep = 1;
