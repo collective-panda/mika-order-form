@@ -395,14 +395,40 @@
             updateUI();
 
             // 送信処理（モック）
+            
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                alert('【送信成功】\nご入力ありがとうございます！\n担当者が内容を確認し、制作に取り掛かります。\n\n※送信後は自動保存のデータがクリアされます。');
-                localStorage.removeItem('mika_lp_draft');
-                form.reset();
-                currentStep = 1;
-                updateUI();
+                
+                const submitBtn = document.getElementById('submitBtn');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '送信中...';
+                submitBtn.disabled = true;
+
+                const formData = new FormData(e.target);
+                const GAS_URL = 'https://script.google.com/macros/s/AKfycbzIep3PWROT3YUN6uaL-pqp30-lsoQ5pBpQjZzdeVVumbbaD9hOXcptUzZB33uGlWd5/exec';
+
+                fetch(GAS_URL, {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors' // CORSエラー回避
+                })
+                .then(() => {
+                    alert('【送信成功】\nご入力ありがとうございます！\n担当者が内容を確認し、制作に取り掛かります。\n\n※送信後は自動保存のデータがクリアされます。');
+                    localStorage.removeItem('mika_lp_draft');
+                    form.reset();
+                    currentStep = 1;
+                    updateUI();
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('通信エラーが発生しました。時間を置いて再度お試しください。');
+                })
+                .finally(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
             });
+
         });
     </script>
 
